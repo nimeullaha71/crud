@@ -9,6 +9,50 @@ class ProductCreateScreen extends StatefulWidget {
 }
 
 class _ProductCreateScreenState extends State<ProductCreateScreen> {
+  Map<String,String>FormValues = {
+
+    "ProductName": "",
+    "ProductCode": "",
+    "Img": "",
+    "Qty": "",
+    "UnitPrice": "",
+    "TotalPrice": ""
+  };
+
+  InputOnChange(MapKey,Textvalue){
+    setState(() {
+      FormValues.update(MapKey, (value) => Textvalue);
+    });
+  }
+
+  FormOnSubmit(){
+
+    if(FormValues['Img']!.length==0){
+      ErrorToast('Image Link Required !');
+    }
+    else if (FormValues['Qty']!.length == 0){
+      ErrorToast('Product Quantity Required');
+    }
+    else if (FormValues['ProductName']!.length == 0){
+      ErrorToast('Product Name Required');
+    }
+    else if (FormValues['ProductCode']!.length == 0){
+      ErrorToast('Product Code Required');
+    }
+    else if (FormValues['UnitPrice']!.length == 0){
+      ErrorToast('UnitPrice Required');
+    }
+    else if (FormValues['TotalPrice']!.length == 0){
+      ErrorToast('Total price Required');
+    }
+
+    else{
+
+    }
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,35 +68,45 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
               child: Column(
                 children: [
                   TextFormField(
-                    onChanged: (value) {},
+                    onChanged: (Textvalue) {
+                      InputOnChange("ProductName",Textvalue);
+                    },
                     decoration: AppInputDecoration('Product Name'),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   TextFormField(
-                    onChanged: (value) {},
+                    onChanged: (Textvalue) {
+                      InputOnChange("ProductCode",Textvalue);
+                    },
                     decoration: AppInputDecoration('Product Code'),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   TextFormField(
-                    onChanged: (value) {},
+                    onChanged: (Textvalue) {
+                      InputOnChange("Img",Textvalue);
+                    },
                     decoration: AppInputDecoration('Product Image'),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   TextFormField(
-                    onChanged: (value) {},
+                    onChanged: (Textvalue) {
+                      InputOnChange("UnitPrice",Textvalue);
+                    },
                     decoration: AppInputDecoration('Unit Price'),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   TextFormField(
-                    onChanged: (value) {},
+                    onChanged: (Textvalue) {
+                      InputOnChange("TotalPrice",Textvalue);
+                    },
                     decoration: AppInputDecoration('Total price'),
                   ),
                   SizedBox(
@@ -60,7 +114,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                   ),
                   AppDropDownStyle(
                     DropdownButton(
-                      value: '',
+                      value: FormValues['Qty'],
                       items: [
                         DropdownMenuItem(
                           child: Text('Select Qty'),
@@ -83,7 +137,9 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                           value: '4 pcs',
                         ),
                       ],
-                      onChanged: (value) {},
+                      onChanged: (Textvalue) {
+                        InputOnChange("Qty",Textvalue);
+                      },
                       isExpanded: true,
                       underline: Container(),
                     ),
@@ -96,6 +152,8 @@ class _ProductCreateScreenState extends State<ProductCreateScreen> {
                         ElevatedButton(
                             style: AppButtonStyle(),
                             onPressed: () {
+                              FormOnSubmit();
+                              print('Error message');
 
                         },
                             child: SuccessButtonChild('Submit')
